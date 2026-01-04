@@ -1,0 +1,290 @@
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Background */
+body {
+    background: linear-gradient(to right, #2c1a12, #4b2e24);
+    color: #fff;
+    min-height: 100vh;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Floating Coffee Sticker */
+body::before {
+    content: "☕";
+    position: fixed;
+    top: 20px;
+    right: 25px;
+    font-size: 60px;
+    transform: rotate(-12deg);
+    opacity: 0.9;
+    filter: drop-shadow(4px 4px 0 #000);
+    z-index: 1;
+}
+
+/* Navigation Bar */
+nav {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 15px 25px;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    position: relative;
+    z-index: 2;
+}
+
+nav a {
+    color: #f3d5b5;
+    text-decoration: none;
+    font-weight: 600;
+    margin: 0 15px;
+    font-size: 18px;
+    transition: all 0.3s ease;
+}
+
+nav a:hover {
+    color: #ffb703;
+    transform: scale(1.1);
+}
+
+/* Page Title */
+h1, h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #ffddc1;
+    letter-spacing: 2px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Coffee Cards */
+.menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+    position: relative;
+    z-index: 2;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 20px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+/* Sticker Label on Coffee Card */
+.card::after {
+    content: "☕ HOT";
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    background: #ffb703;
+    color: #2c1a12;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: bold;
+    transform: rotate(10deg);
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.4);
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+}
+
+.card img {
+    width: 120px;
+    margin-bottom: 15px;
+}
+
+.card h3 {
+    color: #ffb703;
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 10px;
+}
+
+/* Price */
+.price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffd166;
+    margin-bottom: 15px;
+}
+
+/* Buttons */
+button {
+    background: linear-gradient(135deg, #ffb703, #fb8500);
+    border: none;
+    padding: 12px 18px;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #2c1a12;
+    transition: all 0.3s ease;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.5);
+}
+
+button:hover {
+    background: linear-gradient(135deg, #fb8500, #ffb703);
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: translateY(2px);
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+}
+
+/* Cart Table */
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    position: relative;
+    z-index: 2;
+}
+
+table::before {
+    content: "☕";
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    font-size: 40px;
+}
+
+th, td {
+    padding: 15px;
+    text-align: center;
+}
+
+th {
+    background: rgba(0,0,0,0.6);
+    color: #ffd166;
+}
+
+td {
+    background: rgba(255,255,255,0.08);
+}
+
+tr:hover td {
+    background: rgba(255,255,255,0.15);
+}
+
+/* Total Price */
+.total {
+    text-align: right;
+    font-size: 22px;
+    margin-top: 20px;
+    color: #ffddc1;
+    position: relative;
+    z-index: 2;
+}
+
+/* Coffee Human Sticker */
+.coffee-sticker-section {
+    display: flex;
+    justify-content: center;
+    margin: 25px 0;
+    position: relative;
+    z-index: 2;
+}
+
+.coffee-sticker {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    padding: 18px 28px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 6px 6px 0 rgba(0,0,0,0.5);
+    transform: rotate(-2deg);
+    animation: floatSticker 3s ease-in-out infinite;
+}
+
+.sticker-emoji {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.coffee-sticker p {
+    font-size: 14px;
+    color: #ffddc1;
+    font-weight: 500;
+}
+
+/* Floating Animation */
+@keyframes floatSticker {
+    0%, 100% {
+        transform: translateY(0) rotate(-2deg);
+    }
+    50% {
+        transform: translateY(-6px) rotate(2deg);
+    }
+}
+
+/* Login Page Specific */
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.login-box {
+    max-width: 360px;
+    width: 100%;
+    background: rgba(255,255,255,0.12);
+    padding: 35px 30px;
+    border-radius: 22px;
+    text-align: center;
+    box-shadow: 10px 10px 0 rgba(0,0,0,0.5);
+    backdrop-filter: blur(12px);
+    z-index: 2;
+}
+
+.login-box h2 {
+    margin-bottom: 20px;
+    color: #ffddc1;
+    letter-spacing: 1px;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 12px 16px;
+    margin: 12px 0;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+}
+
+.login-box button {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.error {
+    color: #ff6b6b;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
