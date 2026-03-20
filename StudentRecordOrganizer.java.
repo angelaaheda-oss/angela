@@ -1,0 +1,151 @@
+import java.io.*;
+import java.util.*;
+
+public class StudentRecordOrganizer {
+    private static final String DATA_FILE = "student_records.dat";
+    private static Map<String, String> users = new HashMap<>();
+    private static Map<String, List<String>> records = new HashMap<>();
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        loadData();
+        while (true) {
+            System.out.println("\n--- Student Record Organizer ---");
+            System.out.println("1. Login");
+            System.out.println("2. Register");
+            System.out.println("3. Exit");
+            System.out.print("Choose an option: ");
+            String choice = scanner.nextLine();
+
+            switch (choice) {
+                case "1":
+                    login();
+                    break;
+                case "2":
+                    register();
+                    break;
+                case "3":
+                    saveData();
+                    System.out.println("Goodbye!");
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid option!");
+            }
+        }
+    }
+
+    private static void loadData() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(DATA_FILE))) {
+            users = (HashMap<String, String>) ois.readObject();
+            records = (HashMap<String, List<String>>) ois.readObject();
+        } catch (FileNotFoundException e) {
+            // File doesn't exist yet
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error loading data: " + e.getMessage());
+        }
+    }
+
+    private static void saveData() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DATA_FILE))) {
+            oos.writeObject(users);
+            oos.writeObject(records);
+        } catch (IOException e) {
+            System.out.println("Error saving data: " + e.getMessage());
+        }
+    }
+
+    private static void register() {
+        System.out.print("Enter new username: ");
+        String username = scanner.nextLine();
+        if (users.containsKey(username)) {
+            System.out.println("Username already exists!");
+            return;
+        }
+        System.out.print("Enter new password: ");
+        String password = scanner.nextLine();
+        users.put(username, password);
+        records.put(username, new ArrayList<>());
+        saveData();
+        System.out.println("Registration successful!");
+    }
+
+    private static void login() {
+        System.out.print("Username: ");
+        String username = scanner.nextLine();
+        System.out.print("Password: ");
+        String password = scanner.nextLine();
+
+        if (users.containsKey(username) && users.get(username).equals(password)) {
+            System.out.println("Welcome, " + username + "!");
+            userMenu(username);
+        } else {
+            System.out.println("Invalid credentials!");
+        }
+    }
+
+    private static void userMenu(String username) {
+        while (true) {
+            System.out.println("\nStudent Record Organizer");
+            System.out.println("1. View Records");
+            System.out.println("2. Add Record");
+            System.out.println("3. Delete Record");
+            System.out.println("4. Logout");
+            System.out.print("Choose an option: ");
+            String choice = scanner.nextLine();
+
+            switch (choice) {
+                case "1":
+                    viewRecords(username);
+                    break;
+                case "2":
+                    addRecord(username);
+                    break;
+                case "3":
+                    deleteRecord(username);
+                    break;
+                case "4":
+                    return;
+                default:
+                    System.out.println("Invalid choice!");
+            }
+        }
+    }
+
+    private static void viewRecords(String username) {
+        List<String> userRecords = records.get(username);
+        if (userRecords.isEmpty()) {
+            System.out.println("No records found.");
+        } else {
+            System.out.println("\nYour Records:");
+            for (int i = 0; i < userRecords.size(); i++) {
+                System.out.println((i + 1) + ". " + userRecords.get(i));
+            }
+        }
+    }
+
+    private static void addRecord(String username) {
+        System.out.print("Enter new student record: ");
+        String record = scanner.nextLine();
+        records.get(username).add(record);
+        saveData();
+        System.out.println("Record added successfully.");
+    }
+
+    private static void deleteRecord(String username) {
+        viewRecords(username);
+        System.out.print("Enter record number to delete: ");
+        try {
+            int index = Integer.parseInt(scanner.nextLine()) - 1;
+            List<String> userRecords = records.get(username);
+            if (index >= 0 && index < userRecords.size()) {
+                String removed = userRecords.remove(index);
+                saveData();
+                System.out.println("Deleted record: " + removed);
+            } else {
+                System.out.println("Invalid record number!");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Please enter a valid number.");
+        }
+    }
+}
